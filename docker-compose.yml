@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:1.23.1-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./static/:/usr/share/nginx/html    
+    ports:
+      - 80:80
+    networks:
+      - ted-search
+    restart: always 
+  app:
+    container_name: app
+    image: 644435390668.dkr.ecr.eu-central-1.amazonaws.com/dawid-ted-search:latest
+    networks:
+      - ted-search
+    restart: always    
+networks:
+  ted-search:
+    name: ted-search
+    driver: bridge
